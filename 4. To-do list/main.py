@@ -1,41 +1,46 @@
-user_prompt = "Type \"add\", \"show\", \"edit\" or \"quit\": "
-
-todos = []
-
+def read_todos(file_path):
+    with open(file_path, 'r', encoding= 'utf-8') as file_read:
+        todos =  file_read.readlines()
+    return todos
+def write_todos(file_path):
+    with open(file_path, 'w', encoding= 'utf-8') as file_write:
+        file_write.writelines(todos)
+    return
+file_path = input("Enter a file path: ")
 while True:
-    action = input(user_prompt).strip().lower()
+    action = input("Type \"add\", \"show\", \"edit\" or \"complete \": ").strip().lower()
     match action:
         case "add":
-            with open('data.txt', 'r', encoding= 'utf-8') as file_read:
-                todos =  file_read.readlines()
-           
+            todos = read_todos(file_path)
             
             todo = input("Enter a todo: ").strip() + "\n"
             todos.append(todo)
             
-            with open('data.txt', 'w', encoding= 'utf-8') as file_write:
-                file_write.writelines(todos)
+            write_todos(file_path)
             
         case "show":
-            with open('data.txt', 'r', encoding= 'utf-8') as file_read:
-                todos =  file_read.readlines()
+            todos = read_todos(file_path)
             
             for ind, val in enumerate(todos):
-                row = f"str(int({ind}) + 1) ▶\t{val}"
+                row = f"{ind + 1} ▶\t{val}"
                 print(row, end='')
         case "edit":
-            with open('data.txt', 'r', encoding= 'utf-8') as file_read:
-                todos =  file_read.readlines()
+            todos = read_todos(file_path)
             
             existing_todo_index = int(input("Enter a number: ")) - 1
             new_todo = input("Enter new todo: ")
-            todos[existing_todo_index] = new_todo
-        case "complete":
-            with open('data.txt', 'r', encoding= 'utf-8') as file_read:
-                todos =  file_read.readlines()
+            todos[existing_todo_index] = new_todo + '\n'
             
-            num = int(input("Enter a number of todo completed: ")) - 1
-            todos.pop(num)
+            write_todos(file_path)
+        case "complete":
+            todos = read_todos(file_path)
+            
+            ind_remove = int(input("Enter a number of todo completed: ")) - 1
+            todo_to_remove = todos[ind_remove].strip('\n')
+            todos.pop(ind_remove)
+            
+            write_todos(file_path)
+            print(f"Todo \"{todo_to_remove}\" has removed from the list.")
         case "quit":
             break
     
