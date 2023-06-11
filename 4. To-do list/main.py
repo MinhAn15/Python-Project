@@ -6,36 +6,33 @@ while True:
     action = input(user_prompt).strip().lower()
     match action:
         case "add":
-            file_read = open('data.txt', 'r', encoding='utf-8')
-            todos =  file_read.readlines()
-            file_read.close()
+            with open('data.txt', 'r', encoding= 'utf-8') as file_read:
+                todos =  file_read.readlines()
+           
             
             todo = input("Enter a todo: ").strip() + "\n"
             todos.append(todo)
             
-            file_write = open('data.txt', 'w', encoding='utf-8')
-            file_write.writelines(todos)
-            file_write.close()
+            with open('data.txt', 'w', encoding= 'utf-8') as file_write:
+                file_write.writelines(todos)
+            
         case "show":
-            file_read = open('data.txt', 'r', encoding='utf-8')
-            todos =  file_read.readlines()
-            file_read.close()
+            with open('data.txt', 'r', encoding= 'utf-8') as file_read:
+                todos =  file_read.readlines()
             
             for ind, val in enumerate(todos):
-                row = f"{ind} ▶\t{val}"
+                row = f"str(int({ind}) + 1) ▶\t{val}"
                 print(row, end='')
         case "edit":
-            file_read = open('data.txt', 'r', encoding='utf-8')
-            todos =  file_read.readlines()
-            file_read.close()
+            with open('data.txt', 'r', encoding= 'utf-8') as file_read:
+                todos =  file_read.readlines()
             
             existing_todo_index = int(input("Enter a number: ")) - 1
             new_todo = input("Enter new todo: ")
             todos[existing_todo_index] = new_todo
         case "complete":
-            file_read = open('data.txt', 'r', encoding='utf-8')
-            todos =  file_read.readlines()
-            file_read.close()
+            with open('data.txt', 'r', encoding= 'utf-8') as file_read:
+                todos =  file_read.readlines()
             
             num = int(input("Enter a number of todo completed: ")) - 1
             todos.pop(num)
