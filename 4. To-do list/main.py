@@ -1,11 +1,5 @@
-def read_todos(file_path):
-    with open(file_path, 'r', encoding= 'utf-8') as file_read:
-        todos =  file_read.readlines()
-    return todos
-def write_todos(file_path):
-    with open(file_path, 'w', encoding= 'utf-8') as file_write:
-        file_write.writelines(todos)
-    return
+from module.function import read_todos, write_todos
+
 file_path = input("Enter a file path: ")
 while True:
     action = input("Type \"add\", \"show\", \"edit\" or \"complete \": ").strip().lower()
@@ -16,7 +10,7 @@ while True:
             todo = input("Enter a todo: ").strip() + "\n"
             todos.append(todo)
             
-            write_todos(file_path)
+            write_todos(file_path, todos)
             
         case "show":
             todos = read_todos(file_path)
@@ -31,7 +25,7 @@ while True:
             new_todo = input("Enter new todo: ")
             todos[existing_todo_index] = new_todo + '\n'
             
-            write_todos(file_path)
+            write_todos(file_path, todos)
         case "complete":
             todos = read_todos(file_path)
             
@@ -39,7 +33,7 @@ while True:
             todo_to_remove = todos[ind_remove].strip('\n')
             todos.pop(ind_remove)
             
-            write_todos(file_path)
+            write_todos(file_path, todos)
             print(f"Todo \"{todo_to_remove}\" has removed from the list.")
         case "quit":
             break
