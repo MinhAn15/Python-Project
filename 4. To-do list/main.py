@@ -1,5 +1,9 @@
 from module.function import read_todos, write_todos
+import time
 
+
+now = time.strftime('%Y-%m-%d %H:%M:%S')
+print(f"It is at {now}")
 file_path = input("Enter a file path: ")
 while True:
     action = input("Type \"add\", \"show\", \"edit\" or \"complete \": ").strip().lower()
